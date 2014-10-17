@@ -4,8 +4,8 @@
 public class Offer {
 	
 	private String offerType; //buyXgetYfree, dollaroff, discountpercent, nooffer
-	private double factor; //holds the discount for dollaroff or discountpercent
-	private int[] buyXgetYfree;//holds the numerical value of offer: buyXgetYfree[0] is buy X, buyXgetYfree[1] is Y items free
+	private double offerValue; //holds the discount for GET_Y_FREE or dollaroff or discountpercent
+	private int multiplier;//holds the numerical value BUY_XS
 	
 	//String constants to hold the type of offer
 	public static final String OFFER_TYPE_BUY_X_GET_Y_FREE = "buyXgetYfree";
@@ -14,14 +14,23 @@ public class Offer {
 	public static final String OFFER_TYPE_NONE = "nooffer";
 	/**
 	 * @param type
-	 * @param factor
 	 * @param buyXgetYfree
 	 */
-	public Offer (String type, double factor, int[] buyXgetYfree)
+	public Offer (String type, double offerValue, int multiplier)
 	{
-		this.offerType = type;
-		this.factor = factor;
-		this.buyXgetYfree = buyXgetYfree;
+		this.offerType = type;		
+		this.offerValue = offerValue;
+		this.multiplier = multiplier;
+	}
+	/**
+	 * @param type
+	 * @param factor
+	 */
+	public Offer (String type, double offerValue)
+	{
+		this.offerType = type;		
+		this.offerValue = offerValue;
+		this.multiplier = 0;
 	}
 	/**
 	 * @param type
@@ -46,26 +55,26 @@ public class Offer {
 	/**
 	 * @return
 	 */
-	public double getFactor() {
-		return factor;
+	public double getOfferValue() {
+		return offerValue;
 	}
 	/**
-	 * @param factor
+	 * @param offerValue
 	 */
-	public void setFactor(double factor) {
-		this.factor = factor;
+	public void setOfferValue(double offerValue) {
+		this.offerValue = offerValue;
 	}
 	/**
 	 * @return
 	 */
-	public int[] getbuyXgetYfree() {
-		return buyXgetYfree;
+	public int getMultiplier() {
+		return this.multiplier;
 	}
 	/**
-	 * @param buyXgetYfree
+	 * @param multiplier
 	 */
-	public void setbuyXgetYfree(int[] buyXgetYfree) {
-		this.buyXgetYfree = buyXgetYfree;
+	public void setMultiplier(int multiplier) {
+		this.multiplier = multiplier;
 	}
 	
 

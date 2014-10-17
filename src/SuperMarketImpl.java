@@ -2,18 +2,48 @@ import java.util.ArrayList;
 
 public class SuperMarketImpl implements SuperMarket {
 
-/**
- * 
- */
-public SuperMarketImpl()
-{
-	this.initialize();
-}
-private double totalDiscountAmount;
-private double totalUndiscountedAmount;
-private double totalInvoiceAmount; 
-private static Product[] product;
+	public SuperMarketImpl()
+	{
+		this.initialize();
+	}
+	private double totalDiscountAmount;
+	private double totalUndiscountedAmount;
+	private double totalInvoiceAmount; 
+	private static Product[] product;
+	/**
+	 * To initialize the Products and Offers available at Supermarket(source)
+	 * In live prod scenario, data to be read from DB or backend
+	 */
+	public void initialize()
+	{
+			Offer [] offers = new Offer[1];			
+			offers[0] = new Offer(Offer.OFFER_TYPE_BUY_X_GET_Y_FREE, 2,5);
+			
+			
+			this.product  = new Product[3];
+			product[0]= new Product ("A", 20);
+			product[1]= new Product ("B", 50, offers[0]);
+			product[2]= new Product ("C", 30);
+			
+	}
+	
+	public static void main(String[] args) {
 
+			SuperMarketImpl superMarket = new SuperMarketImpl();
+
+
+			
+			if(args != null && args.length > 0)
+			{
+				System.out.println(args[0]);
+				System.out.println(superMarket.checkout(args[0]));
+
+			}
+			else
+				System.out.println("Input String is null");
+			
+		}
+	
 
 /* (non-Javadoc)
  * @see SuperMarket#checkout(java.lang.String)
@@ -97,40 +127,6 @@ private boolean validateInputString(String s)
 		;
 }
 
-/**
- * 
- */
-public void initialize()
-	{
-		Offer [] offers = new Offer[1];
-		//offers[0] = new Offer("dollaroff", 2, new int[]{0,0});
-		//offers[1] = new Offer("discountpercent", 0.3, new int[]{0,0});
-		
-		offers[0] = new Offer(Offer.OFFER_TYPE_BUY_X_GET_Y_FREE, 0, new int[]{5,2});
-		
-		
-		this.product  = new Product[3];
-		product[0]= new Product ("A", 20);
-		product[1]= new Product ("B", 50, offers[0]);
-		product[2]= new Product ("C", 30);
-		
-	}
-	public static void main(String[] args) {
-
-		SuperMarketImpl superMarket = new SuperMarketImpl();
-
-
-		
-		if(args != null && args.length > 0)
-		{
-			System.out.println(args[0]);
-			System.out.println(superMarket.checkout(args[0]));
-
-		}
-		else
-			System.out.println("Input String is null");
-		
-	}
 
 
 	/**
@@ -145,16 +141,16 @@ public void initialize()
 		if(Offer.OFFER_TYPE_BUY_X_GET_Y_FREE.equals(p.getOffer().getOfferType()))
 		{
 			discountAmount = 
-					Math.floor(q/p.getOffer().getbuyXgetYfree()[0]) * p.getOffer().getbuyXgetYfree()[1] * p.getProductPrice();			
+					Math.floor(q/p.getOffer().getMultiplier()) * p.getOffer().getOfferValue() * p.getProductPrice();			
 		}
 		else if(Offer.OFFER_TYPE_DOLLAROFF.equals(p.getOffer().getOfferType()))
 		{
-			discountAmount = p.getOffer().getFactor();
+			discountAmount = p.getOffer().getOfferValue();
 			
 		}
 		else if(Offer.OFFER_TYPE_PERCENT_DISCOUNT.equals(p.getOffer().getOfferType()))
 		{
-			discountAmount = p.getProductPrice() * p.getOffer().getFactor();			
+			discountAmount = p.getProductPrice() * p.getOffer().getOfferValue();			
 		}
 				
 		return discountAmount;

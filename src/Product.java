@@ -8,7 +8,6 @@ public class Product {
 	private String productCode;
 	private double productPrice;
 	private Offer offer;
-	private double salePrice;
 	
 	/**
 	 * @param prodCode
@@ -73,19 +72,7 @@ public class Product {
 		this.offer = offer;
 	}
 
-	/**
-	 * @return
-	 */
-	public double getSalePrice() {
-		return salePrice;
-	}
 
-	/**
-	 * @param salePrice
-	 */
-	public void setSalePrice(double salePrice) {
-		this.salePrice = salePrice;
-	}
 	
 	
 	
